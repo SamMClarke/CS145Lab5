@@ -80,35 +80,30 @@ public class MondrianArt
         }
         else
         {
-            // DRAW AND FILL
-            int fillPicker = r.nextInt(2);
-            switch (fillPicker)
+            // PICK COLOR
+            int colorPicker = r.nextInt(6);
+            switch (colorPicker)
             {
-                case 0: // NO COLOR
+                case 0: 
+                case 1:
+                case 2: // NO COLOR
                     g.setColor(Color.WHITE);
                     break;
-                case 1: // COLOR
-                    int colorPicker = r.nextInt(3);
-                    switch (colorPicker)
-                    {
-                        case 0: // RED
-                            g.setColor(Color.RED);
-                            break;
-                        case 1: // BLUE
-                            g.setColor(Color.BLUE);
-                            break;
-                        case 2: // YELLOW
-                            g.setColor(Color.YELLOW);
-                            break;
-                    }
+                case 3: // RED
+                    g.setColor(Color.RED);
+                    break;
+                case 4: // BLUE
+                    g.setColor(Color.BLUE);
+                    break;
+                case 5: // YELLOW
+                    g.setColor(Color.YELLOW);
                     break;
             }
         
-            g.fillRect(x, y, width, height); //COLOR
-            g.setColor(Color.BLACK);
-            g.drawRect(x, y, width, height); //BORDER
+            g.fillRect(x, y, width, height); // DRAW COLOR
+            g.setColor(Color.BLACK); // BORDER COLOR
+            g.drawRect(x, y, width, height); // DRAW BORDER
         }
-    
     }
 
     /**
