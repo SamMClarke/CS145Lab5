@@ -7,7 +7,7 @@ This program draws Mondrian style art using recursion
 */
 
 //Draws Mondrian style art through recursion
-public static void drawArt(int x, int y, int width, int height, Graphics g, Random r)
+//public static void drawArt(int x, int y, int width, int height, Graphics g, Random r)
 //int x: region origin x value
 //int y: region origin y value
 //int width: region's width
@@ -20,15 +20,15 @@ public static void drawArt(int x, int y, int width, int height, Graphics g, Rand
 
 
 //Splits a region into four random parts
-public static void fourRegions(int x, int y, int width, int height, Graphics g, Random r, int horzSplit, int vertSplit)
+//public static void fourRegions(int x, int y, int width, int height, Graphics g, Random r, int horzSplit, int vertSplit)
 //Using the random horzSplit and vertSplit, split the region into 4 parts, calling a new drawArt for each one.
 
 
 //Splits a region into 2 random parts horizontally
-public static void twoRegionsHorz(int x, int y, int width, int height, Graphics g, Random r, int horzSplit)
+//public static void twoRegionsHorz(int x, int y, int width, int height, Graphics g, Random r, int horzSplit)
 //Using the random horzSplit, split the region into 2 parts, calling a new drawArt for each one.
 
 
 //Splits a region into 2 random parts vertically
-public static void twoRegionsVert(int x, int y, int width, int height, Graphics g, Random r, int vertSplit)
+//public static void twoRegionsVert(int x, int y, int width, int height, Graphics g, Random r, int vertSplit)
 //Using the random vertSplit, split the region into 2 parts, calling a new drawArt for each one.
