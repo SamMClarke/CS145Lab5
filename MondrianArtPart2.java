@@ -88,7 +88,7 @@ public class MondrianArtPart2 {
                     break;
             }
 
-            // Gr
+            // GRADIENT
             // Calculate the center of the rectangle
             int centerX = x + width / 2;
             int centerY = y + height / 2;
