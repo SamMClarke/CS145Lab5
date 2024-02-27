@@ -40,7 +40,7 @@ public class MondrianArtPart2 {
      * @param height Region height.
      */
     public static void drawArt(Graphics g, int x, int y, int width, int height) {
-        Lab2Random r = new Lab2Random(); 
+        Lab5Random r = new Lab5Random(); 
 
         // INITIALIZE RANDOM SPLIT VALUES
         int horzSplit = r.nextInt((int)(height * LOWER_BOUND), (int)(height * UPPER_BOUND));
@@ -75,7 +75,7 @@ public class MondrianArtPart2 {
      * @param g Graphics object.
      */
     private static void fillGraphicsWithColor(Graphics g) {
-        Lab2Random r = new Lab2Random();
+        Lab5Random r = new Lab5Random();
         int colorPicker = r.nextInt(6);
         switch (colorPicker) {
             case 0: g.setColor(Color.RED); break;
@@ -96,7 +96,7 @@ public class MondrianArtPart2 {
      * @param height Region height.
      */
     private static void fillGraphicsWithShape(Graphics g, int x, int y, int width, int height) {
-        Lab2Random r = new Lab2Random();
+        Lab5Random r = new Lab5Random();
         int shapePicker = r.nextInt(6);
         switch (shapePicker) {
             case 0: drawCross(g, x, y, width, height); break;
