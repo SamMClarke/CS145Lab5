@@ -48,30 +48,28 @@ public class MondrianArtPart2 {
 
         // START RECURSION
         if (width > PANEL_SIZE / 2 && height > PANEL_SIZE / 2) {
-            // FOUR REGIONS
-            fourRegions(g, x, y, width, height, horzSplit, vertSplit);
+            fourRegions(g, x, y, width, height, horzSplit, vertSplit); // FOUR REGIONS
         } else if (width > PANEL_SIZE / 2) {
-            // TWO REGIONS VERTICALLY
-            twoRegionsVert(g, x, y, width, height, vertSplit);
+            twoRegionsVert(g, x, y, width, height, vertSplit); // TWO REGIONS VERTICALLY
         } else if (height > PANEL_SIZE / 2) {
-            // TWO REGIONS HORIZONTALLY
-            twoRegionsHorz(g, x, y, width, height, horzSplit);
+            twoRegionsHorz(g, x, y, width, height, horzSplit); // TWO REGIONS HORIZONTALLY
         } else if (r.nextInt(MINIMUM_THRESHOLD, Math.max((int)(width * RAND_FACTOR), MINIMUM_THRESHOLD + 1)) < width &&
                 r.nextInt(MINIMUM_THRESHOLD, Math.max((int)(height * RAND_FACTOR), MINIMUM_THRESHOLD + 1)) < height) {
-            // FOUR REGIONS
-            fourRegions(g, x, y, width, height, horzSplit, vertSplit);
+            fourRegions(g, x, y, width, height, horzSplit, vertSplit); // FOUR REGIONS
         } else if (r.nextInt(MINIMUM_THRESHOLD, Math.max((int)(width * RAND_FACTOR), MINIMUM_THRESHOLD + 1)) < width) {
-            // TWO REGIONS VERTICALLY
-            twoRegionsVert(g, x, y, width, height, vertSplit);
+            twoRegionsVert(g, x, y, width, height, vertSplit); // TWO REGIONS VERTICALLY
         } else if (r.nextInt(MINIMUM_THRESHOLD, Math.max((int)(height * RAND_FACTOR), MINIMUM_THRESHOLD + 1)) < height) {
-            // TWO REGIONS HORIZONTALLY
-            twoRegionsHorz(g, x, y, width, height, horzSplit);
+            twoRegionsHorz(g, x, y, width, height, horzSplit); // TWO REGIONS HORIZONTALLY
         } else {
             fillGraphicsWithColor(g);
             gradientGraphicsFromCenter(g, x, y, width, height);
+            g.fillRect(x, y, width, height); // DRAW COLOR
+            g.setColor(Color.BLACK); // BORDER COLOR
+            g.drawRect(x, y, width, height); // DRAW BORDER
             fillGraphicsWithShape(g, x, y, width, height);
         }
     }
+
     /** Fills the graphics with colors
      * 
      * @param g Graphics object.
@@ -148,10 +146,6 @@ public class MondrianArtPart2 {
             case 7: g.setColor(g.getColor().darker().darker().darker().darker()); break;
             default: g.setColor(g.getColor().darker().darker().darker().darker().darker()); break;
         }
-
-        g.fillRect(x, y, width, height); // DRAW COLOR
-        g.setColor(Color.BLACK); // BORDER COLOR
-        g.drawRect(x, y, width, height); // DRAW BORDER
     }
 
     /** Draw a cross in rect
