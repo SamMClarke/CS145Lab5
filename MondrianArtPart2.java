@@ -30,14 +30,14 @@ public class MondrianArtPart2 {
 
     /**
      * Creates Mondrian-style art through recursion.
-    *
-    * @param x Origin x value of the region.
-    * @param y Origin y value of the region.
-    * @param width Region width.
-    * @param height Region height.
-    * @param g Graphics object.
-    * @param r Lab2Random object.
-    */
+     *
+     * @param x Origin x value of the region.
+     * @param y Origin y value of the region.
+     * @param width Region width.
+     * @param height Region height.
+     * @param g Graphics object.
+     * @param r Lab2Random object.
+     */
     public static void drawArt(int x, int y, int width, int height, Graphics g, Lab2Random r) {   
         // INITIALIZE RANDOM SPLIT VALUES
         int horzSplit = r.nextInt((int)(height * LOWER_BOUND), (int)(height * UPPER_BOUND));
@@ -133,16 +133,16 @@ public class MondrianArtPart2 {
 
     /**
      * Splits a region into four separate regions
-    *
-    * @param x Origin x value of the region.
-    * @param y Origin y value of the region.
-    * @param width Region width.
-    * @param height Region height.
-    * @param g Graphics object.
-    * @param r Lab2Random object.
-    * @param horzSplit Horizontal split line
-    * @param vertSplit Vertical split line
-    */
+     *
+     * @param x Origin x value of the region.
+     * @param y Origin y value of the region.
+     * @param width Region width.
+     * @param height Region height.
+     * @param g Graphics object.
+     * @param r Lab2Random object.
+     * @param horzSplit Horizontal split line
+     * @param vertSplit Vertical split line
+     */
     private static void fourRegions(int x, int y, int width, int height, Graphics g, Lab2Random r, int horzSplit, int vertSplit) {
         drawArt(x, y, vertSplit, horzSplit, g, r);
         drawArt(x + vertSplit, y, width - vertSplit, horzSplit, g, r);
@@ -152,15 +152,15 @@ public class MondrianArtPart2 {
 
     /**
      * Splits a region into two separate regions vertically
-    *
-    * @param x Origin x value of the region.
-    * @param y Origin y value of the region.
-    * @param width Region width.
-    * @param height Region height.
-    * @param g Graphics object.
-    * @param r Lab2Random object.
-    * @param vertSplit Vertical split line
-    */
+     *
+     * @param x Origin x value of the region.
+     * @param y Origin y value of the region.
+     * @param width Region width.
+     * @param height Region height.
+     * @param g Graphics object.
+     * @param r Lab2Random object.
+     * @param vertSplit Vertical split line
+     */
     private static void twoRegionsVert(int x, int y, int width, int height, Graphics g, Lab2Random r, int vertSplit) {
         drawArt(x, y, vertSplit, height, g, r);
         drawArt(x + vertSplit, y, width - vertSplit, height, g, r);
@@ -168,15 +168,15 @@ public class MondrianArtPart2 {
 
     /**
      * Splits a region into two separate regions horizontally
-    *
-    * @param x Origin x value of the region.
-    * @param y Origin y value of the region.
-    * @param width Region width.
-    * @param height Region height.
-    * @param g Graphics object.
-    * @param r Lab2Random object.
-    * @param horzSplit Horizontal split line
-    */
+     *
+     * @param x Origin x value of the region.
+     * @param y Origin y value of the region.
+     * @param width Region width.
+     * @param height Region height.
+     * @param g Graphics object.
+     * @param r Lab2Random object.
+     * @param horzSplit Horizontal split line
+     */
     private static void twoRegionsHorz(int x, int y, int width, int height, Graphics g, Lab2Random r, int horzSplit) {
         drawArt(x, y, width, horzSplit, g, r);
         drawArt(x, y + horzSplit, width, height - horzSplit, g, r);
