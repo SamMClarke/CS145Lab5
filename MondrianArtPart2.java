@@ -72,19 +72,19 @@ public class MondrianArtPart2 {
                     g.setColor(Color.RED);
                     break;
                 case 1:
-                    g.setColor(Color.DARK_GRAY);
+                    g.setColor(Color.MAGENTA);
                     break;
                 case 2:
-                    g.setColor(Color.GRAY);
-                    break;
-                case 3:
                     g.setColor(Color.ORANGE);
                     break;
+                case 3:
+                    g.setColor(Color.GREEN);
+                    break;
                 case 4:
-                    g.setColor(Color.YELLOW);
+                    g.setColor(Color.BLUE);
                     break;
                 case 5:
-                    g.setColor(Color.BLACK);
+                    g.setColor(Color.GRAY);
                     break;
             }
 
