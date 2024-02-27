@@ -88,25 +88,51 @@ public class MondrianArtPart2 {
                     break;
             }
 
-            // GRADIENT
-            if (x + width / 2 < PANEL_SIZE / 9) {
-                g.setColor(g.getColor().darker().darker().darker().darker());
-            } else if (x + width / 2 < 2 * PANEL_SIZE / 9) {
-                g.setColor(g.getColor().darker().darker().darker());
-            } else if (x + width / 2 < 3 * PANEL_SIZE / 9) {
-                g.setColor(g.getColor().darker().darker());
-            } else if (x + width / 2 < 4 * PANEL_SIZE / 9) {
-                g.setColor(g.getColor().darker());
-            } else if (x + width / 2 < 5 * PANEL_SIZE / 9) {
-                g.setColor(g.getColor());
-            } else if (x + width / 2 < 6 * PANEL_SIZE / 9) {
-                g.setColor(g.getColor().darker());
-            } else if (x + width / 2 < 7 * PANEL_SIZE / 9) {
-                g.setColor(g.getColor().darker().darker());
-            } else if (x + width / 2 < 8 * PANEL_SIZE / 9) {
-                g.setColor(g.getColor().darker().darker().darker());
-            } else {
-                g.setColor(g.getColor().darker().darker().darker().darker());
+            // Gr
+            // Calculate the center of the rectangle
+            int centerX = x + width / 2;
+            int centerY = y + height / 2;
+
+            // Calculate the center of the panel
+            int panelCenterX = PANEL_SIZE / 2;
+            int panelCenterY = PANEL_SIZE / 2;
+
+            // Calculate the distance from the center of the rectangle to the center of the panel
+            double distanceToCenter = Math.sqrt(Math.pow(centerX - panelCenterX, 2) + Math.pow(centerY - panelCenterY, 2));
+
+            // Normalize the distance to a value between 0 and 1
+            double normalizedDistance = distanceToCenter / (Math.sqrt(2) * (PANEL_SIZE / 2));
+
+            // Determine the gradient level based on the normalized distance
+            int gradientLevel = (int)(normalizedDistance * 8); // Assume 8 levels of gradient for simplicity
+
+            // Adjust color based on the normalized distance to create a rounded gradient effect
+            switch (gradientLevel) {
+                case 0:
+                    g.setColor(g.getColor().brighter().brighter().brighter()); // Brightest near the center
+                    break;
+                case 1:
+                    g.setColor(g.getColor().brighter().brighter());
+                    break;
+                case 2:
+                    g.setColor(g.getColor().brighter());
+                    break;
+                case 3:
+                case 4:
+                    g.setColor(g.getColor());
+                    break;
+                case 5: // darker as we move away from the center
+                    g.setColor(g.getColor().darker());
+                    break;
+                case 6:
+                    g.setColor(g.getColor().darker().darker());
+                    break;
+                case 7:
+                    g.setColor(g.getColor().darker().darker().darker());
+                    break;
+                default:
+                    g.setColor(g.getColor().darker().darker().darker().darker());
+                    break;
             }
 
             g.fillRect(x, y, width, height); // DRAW COLOR
