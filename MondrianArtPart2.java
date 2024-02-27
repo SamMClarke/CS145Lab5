@@ -9,6 +9,7 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
 
 public class MondrianArtPart2 {
     // CLASS CONSTANTS
@@ -113,24 +114,127 @@ public class MondrianArtPart2 {
             g.drawRect(x, y, width, height); // DRAW BORDER
 
             // PICK AND DRAW SHAPES
-            int shapePicker = r.nextInt(3);
+            int shapePicker = r.nextInt(6);
             switch (shapePicker) {
                 case 0: // DRAW X
-                    g.drawLine(x, y, x + width, y + height);
-                    g.drawLine(x, y + height, x + width, y);
+                    drawCross(g, x, y, width, height);
                     break;
                 case 1: // DRAW O
-                    g.drawOval(x, y, width, height);
+                    drawOval(g, x, y, width, height);
                     break;
                 case 2: // DRAW PACMAN
-                    int[] xPoints = {x, x + width / 2, x + width, x + width / 2, x + width, x + width / 2};
-                    int[] yPoints = {y + height / 2, y, y + height / 4, y + height / 2, y + 3 * height / 4, y + height};
-                    g.drawPolygon(xPoints, yPoints, 6);
+                    drawPolygon(g, x, y, width, height);
+                    break;
+                case 3: // DRAW MICKEY MOUSE with 90-degree rotation increments, outline only
+                    // Main face dimensions
+                    drawMickeyMouse(g, x, y, width, height);
+                    break;
+                default: // 4, 5
+                    // empty rects
                     break;
             }
         }
     }
 
+    /** Draw a cross in rect
+     * 
+     * @param g Graphics object.
+     * @param x Origin x value of the region.
+     * @param y Origin y value of the region.
+     * @param width Region width.
+     * @param height Region height.
+     */
+    private static void drawCross(Graphics g, int x, int y, int width, int height) {
+        g.drawLine(x, y, x + width, y + height);
+        g.drawLine(x, y + height, x + width, y);
+    }
+
+    /** Draw a oval fills in rect
+     * 
+     * @param g Graphics object.
+     * @param x Origin x value of the region.
+     * @param y Origin y value of the region.
+     * @param width Region width.
+     * @param height Region height.
+     */
+    private static void drawOval(Graphics g, int x, int y, int width, int height) {
+        g.drawOval(x, y, width, height);
+    }
+
+    /** Draw a polygon fills in rect
+     * 
+     * @param g Graphics object.
+     * @param x Origin x value of the region.
+     * @param y Origin y value of the region.
+     * @param width Region width.
+     * @param height Region height.
+     */
+    private static void drawPolygon(Graphics g, int x, int y, int width, int height) {
+        int[] xPoints = {x, x + width / 2, x + width, x + width / 2, x + width, x + width / 2};
+        int[] yPoints = {y + height / 2, y, y + height / 4, y + height / 2, y + 3 * height / 4, y + height};
+        g.drawPolygon(xPoints, yPoints, 6);
+
+    }
+
+    /** Draw a Mickey Mouse fills in rect
+     * 
+     * @param g Graphics object.
+     * @param x Origin x value of the region.
+     * @param y Origin y value of the region.
+     * @param width Region width.
+     * @param height Region height.
+     */
+    private static void drawMickeyMouse(Graphics g, int x, int y, int width, int height) {
+        // Main face dimensions
+        int faceDiameter = Math.min(width, height) * 3 / 4; // Face diameter as 75% of the smallest dimension
+        int faceX = x + (width - faceDiameter) / 2; // Center the face horizontally within the square
+        int faceY = y + (height - faceDiameter) / 2; // Center the face vertically within the square
+
+        // Draw main face circle
+        g.drawOval(faceX, faceY, faceDiameter, faceDiameter);
+
+        // Ears dimensions
+        int earDiameter = faceDiameter / 2; // Each ear's diameter is half of the face's diameter
+
+        // Randomly select an angle for ear placement: 0, 90, 180, 270 degrees
+        int angle = new Random().nextInt(4) * 90; // Randomly select 0, 90, 180, 270
+
+        // Initialize ear positions
+        int ear1X = 0, ear1Y = 0, ear2X = 0, ear2Y = 0;
+
+        // Calculate positions based on the selected angle
+        switch (angle) {
+            case 0: // Ears on top
+                ear1X = faceX - earDiameter / 2;
+                ear1Y = faceY - earDiameter / 2;
+                ear2X = faceX + faceDiameter - earDiameter / 2;
+                ear2Y = faceY - earDiameter / 2;
+                break;
+            case 90: // Ears on right
+                ear1X = faceX + faceDiameter - earDiameter / 2;
+                ear1Y = faceY - earDiameter / 2;
+                ear2X = faceX + faceDiameter - earDiameter / 2;
+                ear2Y = faceY + faceDiameter - earDiameter / 2;
+                break;
+            case 180: // Ears on bottom
+                ear1X = faceX - earDiameter / 2;
+                ear1Y = faceY + faceDiameter - earDiameter / 2;
+                ear2X = faceX + faceDiameter - earDiameter / 2;
+                ear2Y = faceY + faceDiameter - earDiameter / 2;
+                break;
+            case 270: // Ears on left
+                ear1X = faceX - earDiameter / 2;
+                ear1Y = faceY - earDiameter / 2;
+                ear2X = faceX - earDiameter / 2;
+                ear2Y = faceY + faceDiameter - earDiameter / 2;
+                break;
+    }
+
+    // Draw ears
+    g.drawOval(ear1X, ear1Y, earDiameter, earDiameter); // First ear
+    g.drawOval(ear2X, ear2Y, earDiameter, earDiameter); // Second ear
+
+    }
     /**
      * Splits a region into four separate regions
      *
