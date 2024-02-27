@@ -254,8 +254,8 @@ public class MondrianArtPart2 {
      * @param y Origin y value of the region.
      * @param width Region width.
      * @param height Region height.
-     * @param horzSplit Horizontal split line
-     * @param vertSplit Vertical split line
+     * @param horzSplit Horizontal split line.
+     * @param vertSplit Vertical split line.
      */
     private static void fourRegions(Graphics g, int x, int y, int width, int height, int horzSplit, int vertSplit) {
         drawArt(g, x, y, vertSplit, horzSplit);
@@ -272,7 +272,7 @@ public class MondrianArtPart2 {
      * @param y Origin y value of the region.
      * @param width Region width.
      * @param height Region height.
-     * @param vertSplit Vertical split line
+     * @param vertSplit Vertical split line.
      */
     private static void twoRegionsVert(Graphics g, int x, int y, int width, int height, int vertSplit) {
         drawArt(g, x, y, vertSplit, height);
@@ -287,7 +287,7 @@ public class MondrianArtPart2 {
      * @param y Origin y value of the region.
      * @param width Region width.
      * @param height Region height.
-     * @param horzSplit Horizontal split line
+     * @param horzSplit Horizontal split line.
      */
     private static void twoRegionsHorz(Graphics g, int x, int y, int width, int height, int horzSplit) {
         drawArt(g, x, y, width, horzSplit);
