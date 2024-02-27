@@ -118,20 +118,22 @@ public class MondrianArtPart2 {
                     g.setColor(g.getColor().brighter());
                     break;
                 case 3:
-                case 4:
                     g.setColor(g.getColor());
                     break;
-                case 5: // darker as we move away from the center
+                case 4:
                     g.setColor(g.getColor().darker());
                     break;
-                case 6:
+                case 5: // darker as we move away from the center
                     g.setColor(g.getColor().darker().darker());
                     break;
-                case 7:
+                case 6:
                     g.setColor(g.getColor().darker().darker().darker());
                     break;
-                default:
+                case 7:
                     g.setColor(g.getColor().darker().darker().darker().darker());
+                    break;
+                default:
+                    g.setColor(g.getColor().darker().darker().darker().darker().darker());
                     break;
             }
 
