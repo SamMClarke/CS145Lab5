@@ -7,8 +7,8 @@
  * @Purpose: Using recursion to create mondrian style art with some modifications. 
  */
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Graphics;
 
 public class MondrianArtPart2
 {
@@ -24,7 +24,7 @@ public class MondrianArtPart2
         // INITIALIZE OBJECTS
         DrawingPanel panel = new DrawingPanel(PANEL_SIZE, PANEL_SIZE);
         Graphics g = panel.getGraphics();
-        Random r = new Random();
+        Lab2Random r = new Lab2Random();
         
         // CALL RECURSION METHOD
         drawArt(0, 0, PANEL_SIZE, PANEL_SIZE, g, r);
@@ -38,9 +38,9 @@ public class MondrianArtPart2
     * @param width Region width.
     * @param height Region height.
     * @param g Graphics object.
-    * @param r Random object.
+    * @param r Lab2Random object.
     */
-    public static void drawArt(int x, int y, int width, int height, Graphics g, Random r)
+    public static void drawArt(int x, int y, int width, int height, Graphics g, Lab2Random r)
     {   
         // INITIALIZE RANDOM SPLIT VALUES
         int horzSplit = r.nextInt((int)(height*LOWER_BOUND), (int)(height*UPPER_BOUND));
@@ -173,11 +173,11 @@ public class MondrianArtPart2
     * @param width Region width.
     * @param height Region height.
     * @param g Graphics object.
-    * @param r Random object.
+    * @param r Lab2Random object.
     * @param horzSplit Horizontal split line
     * @param vertSplit Vertical split line
     */
-    private static void fourRegions(int x, int y, int width, int height, Graphics g, Random r, int horzSplit, int vertSplit)
+    private static void fourRegions(int x, int y, int width, int height, Graphics g, Lab2Random r, int horzSplit, int vertSplit)
     {
         drawArt(x, y, vertSplit, horzSplit, g, r);
         drawArt(x + vertSplit, y, width - vertSplit, horzSplit, g, r);
@@ -193,10 +193,10 @@ public class MondrianArtPart2
     * @param width Region width.
     * @param height Region height.
     * @param g Graphics object.
-    * @param r Random object.
+    * @param r Lab2Random object.
     * @param vertSplit Vertical split line
     */
-    private static void twoRegionsVert(int x, int y, int width, int height, Graphics g, Random r, int vertSplit)
+    private static void twoRegionsVert(int x, int y, int width, int height, Graphics g, Lab2Random r, int vertSplit)
     {
         drawArt(x, y, vertSplit, height, g, r);
         drawArt(x + vertSplit, y, width - vertSplit, height, g, r);
@@ -210,10 +210,10 @@ public class MondrianArtPart2
     * @param width Region width.
     * @param height Region height.
     * @param g Graphics object.
-    * @param r Random object.
+    * @param r Lab2Random object.
     * @param horzSplit Horizontal split line
     */
-    private static void twoRegionsHorz(int x, int y, int width, int height, Graphics g, Random r, int horzSplit)
+    private static void twoRegionsHorz(int x, int y, int width, int height, Graphics g, Lab2Random r, int horzSplit)
     {
         drawArt(x, y, width, horzSplit, g, r);
         drawArt(x, y + horzSplit, width, height - horzSplit, g, r);
