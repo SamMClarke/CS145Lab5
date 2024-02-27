@@ -1,5 +1,7 @@
 /**
  * MondrianArtPart2.java
+ * Generates Mondrian-style art using recursion with modifications.
+ *
  * @Author: Sam Clarke, JeongGyu Tak, Nick Ivancovich
  * @Date: 240226
  * @Class: CS&145
@@ -23,23 +25,23 @@ public class MondrianArtPart2 {
         // INITIALIZE OBJECTS
         DrawingPanel panel = new DrawingPanel(PANEL_SIZE, PANEL_SIZE);
         Graphics g = panel.getGraphics();
-        Lab2Random r = new Lab2Random();
         
         // CALL RECURSION METHOD
-        drawArt(0, 0, PANEL_SIZE, PANEL_SIZE, g, r);
+        drawArt(g, 0, 0, PANEL_SIZE, PANEL_SIZE);
     }
 
     /**
      * Creates Mondrian-style art through recursion.
      *
+     * @param g Graphics object.
      * @param x Origin x value of the region.
      * @param y Origin y value of the region.
      * @param width Region width.
      * @param height Region height.
-     * @param g Graphics object.
-     * @param r Lab2Random object.
      */
-    public static void drawArt(int x, int y, int width, int height, Graphics g, Lab2Random r) {   
+    public static void drawArt(Graphics g, int x, int y, int width, int height) {
+        Lab2Random r = new Lab2Random(); 
+
         // INITIALIZE RANDOM SPLIT VALUES
         int horzSplit = r.nextInt((int)(height * LOWER_BOUND), (int)(height * UPPER_BOUND));
         int vertSplit = r.nextInt((int)(width * LOWER_BOUND), (int)(width * UPPER_BOUND));
@@ -47,121 +49,109 @@ public class MondrianArtPart2 {
         // START RECURSION
         if (width > PANEL_SIZE / 2 && height > PANEL_SIZE / 2) {
             // FOUR REGIONS
-            fourRegions(x, y, width, height, g, r, horzSplit, vertSplit);
+            fourRegions(g, x, y, width, height, horzSplit, vertSplit);
         } else if (width > PANEL_SIZE / 2) {
             // TWO REGIONS VERTICALLY
-            twoRegionsVert(x, y, width, height, g, r, vertSplit);
+            twoRegionsVert(g, x, y, width, height, vertSplit);
         } else if (height > PANEL_SIZE / 2) {
             // TWO REGIONS HORIZONTALLY
-            twoRegionsHorz(x, y, width, height, g, r, horzSplit);
+            twoRegionsHorz(g, x, y, width, height, horzSplit);
         } else if (r.nextInt(MINIMUM_THRESHOLD, Math.max((int)(width * RAND_FACTOR), MINIMUM_THRESHOLD + 1)) < width &&
                 r.nextInt(MINIMUM_THRESHOLD, Math.max((int)(height * RAND_FACTOR), MINIMUM_THRESHOLD + 1)) < height) {
             // FOUR REGIONS
-            fourRegions(x, y, width, height, g, r, horzSplit, vertSplit);
+            fourRegions(g, x, y, width, height, horzSplit, vertSplit);
         } else if (r.nextInt(MINIMUM_THRESHOLD, Math.max((int)(width * RAND_FACTOR), MINIMUM_THRESHOLD + 1)) < width) {
             // TWO REGIONS VERTICALLY
-            twoRegionsVert(x, y, width, height, g, r, vertSplit);
+            twoRegionsVert(g, x, y, width, height, vertSplit);
         } else if (r.nextInt(MINIMUM_THRESHOLD, Math.max((int)(height * RAND_FACTOR), MINIMUM_THRESHOLD + 1)) < height) {
             // TWO REGIONS HORIZONTALLY
-            twoRegionsHorz(x, y, width, height, g, r, horzSplit);
+            twoRegionsHorz(g, x, y, width, height, horzSplit);
         } else {
-            // PICK COLOR
-            int colorPicker = r.nextInt(6);
-            switch (colorPicker) {
-                case 0: 
-                    g.setColor(Color.RED);
-                    break;
-                case 1:
-                    g.setColor(Color.MAGENTA);
-                    break;
-                case 2:
-                    g.setColor(Color.ORANGE);
-                    break;
-                case 3:
-                    g.setColor(Color.GREEN);
-                    break;
-                case 4:
-                    g.setColor(Color.BLUE);
-                    break;
-                case 5:
-                    g.setColor(Color.GRAY);
-                    break;
-            }
-
-            // GRADIENT
-            // Calculate the center of the rectangle
-            int centerX = x + width / 2;
-            int centerY = y + height / 2;
-
-            // Calculate the center of the panel
-            int panelCenterX = PANEL_SIZE / 2;
-            int panelCenterY = PANEL_SIZE / 2;
-
-            // Calculate the distance from the center of the rectangle to the center of the panel
-            double distanceToCenter = Math.sqrt(Math.pow(centerX - panelCenterX, 2) + Math.pow(centerY - panelCenterY, 2));
-
-            // Normalize the distance to a value between 0 and 1
-            double normalizedDistance = distanceToCenter / (Math.sqrt(2) * (PANEL_SIZE / 2));
-
-            // Determine the gradient level based on the normalized distance
-            int gradientLevel = (int)(normalizedDistance * 8); // Assume 8 levels of gradient for simplicity
-
-            // Adjust color based on the normalized distance to create a rounded gradient effect
-            switch (gradientLevel) {
-                case 0:
-                    g.setColor(g.getColor().brighter().brighter().brighter()); // Brightest near the center
-                    break;
-                case 1:
-                    g.setColor(g.getColor().brighter().brighter());
-                    break;
-                case 2:
-                    g.setColor(g.getColor().brighter());
-                    break;
-                case 3:
-                    g.setColor(g.getColor());
-                    break;
-                case 4:
-                    g.setColor(g.getColor().darker());
-                    break;
-                case 5: // darker as we move away from the center
-                    g.setColor(g.getColor().darker().darker());
-                    break;
-                case 6:
-                    g.setColor(g.getColor().darker().darker().darker());
-                    break;
-                case 7:
-                    g.setColor(g.getColor().darker().darker().darker().darker());
-                    break;
-                default:
-                    g.setColor(g.getColor().darker().darker().darker().darker().darker());
-                    break;
-            }
-
-            g.fillRect(x, y, width, height); // DRAW COLOR
-            g.setColor(Color.BLACK); // BORDER COLOR
-            g.drawRect(x, y, width, height); // DRAW BORDER
-
-            // PICK AND DRAW SHAPES
-            int shapePicker = r.nextInt(6);
-            switch (shapePicker) {
-                case 0: // DRAW X
-                    drawCross(g, x, y, width, height);
-                    break;
-                case 1: // DRAW O
-                    drawOval(g, x, y, width, height);
-                    break;
-                case 2: // DRAW PACMAN
-                    drawPolygon(g, x, y, width, height);
-                    break;
-                case 3: // DRAW MICKEY MOUSE with 90-degree rotation increments, outline only
-                    // Main face dimensions
-                    drawMickeyMouse(g, x, y, width, height);
-                    break;
-                default: // 4, 5
-                    // empty rects
-                    break;
-            }
+            fillGraphicsWithColor(g);
+            gradientGraphicsFromCenter(g, x, y, width, height);
+            fillGraphicsWithShape(g, x, y, width, height);
         }
+    }
+    /** Fills the graphics with colors
+     * 
+     * @param g Graphics object.
+     */
+    private static void fillGraphicsWithColor(Graphics g) {
+        Lab2Random r = new Lab2Random();
+        int colorPicker = r.nextInt(6);
+        switch (colorPicker) {
+            case 0: g.setColor(Color.RED); break;
+            case 1: g.setColor(Color.MAGENTA); break;
+            case 2: g.setColor(Color.ORANGE); break;
+            case 3: g.setColor(Color.GREEN); break;
+            case 4: g.setColor(Color.BLUE); break;
+            default: g.setColor(Color.GRAY); break; // 5
+        }
+    }
+
+    /** Fills graphics with shape
+     * 
+     * @param g Graphics object.
+     * @param x Origin x value of the region.
+     * @param y Origin y value of the region.
+     * @param width Region width.
+     * @param height Region height.
+     */
+    private static void fillGraphicsWithShape(Graphics g, int x, int y, int width, int height) {
+        Lab2Random r = new Lab2Random();
+        int shapePicker = r.nextInt(6);
+        switch (shapePicker) {
+            case 0: drawCross(g, x, y, width, height); break;
+            case 1: drawOval(g, x, y, width, height); break;
+            case 2: drawPacMan(g, x, y, width, height); break;
+            case 3: drawMickeyMouse(g, x, y, width, height); break;
+            default: break; // 4, 5 empty rects
+        }
+    }
+
+    /** Provide a gradient to graphics depends on it's distance from center.
+     * further from the center the darker it gets.
+     * 
+     * @param g Graphics object.
+     * @param x Origin x value of the region.
+     * @param y Origin y value of the region.
+     * @param width Region width.
+     * @param height Region height.
+     */
+    private static void gradientGraphicsFromCenter(Graphics g, int x, int y, int width, int height) {
+        // Calculate the center of the rectangle
+        int centerX = x + width / 2;
+        int centerY = y + height / 2;
+
+        // Calculate the center of the panel
+        int panelCenterX = PANEL_SIZE / 2;
+        int panelCenterY = PANEL_SIZE / 2;
+
+        // Calculate the distance from the center of the rectangle to the center of the panel
+        double distanceToCenter = Math.sqrt(Math.pow(centerX - panelCenterX, 2) + Math.pow(centerY - panelCenterY, 2));
+
+        // Normalize the distance to a value between 0 and 1
+        double normalizedDistance = distanceToCenter / (Math.sqrt(2) * (PANEL_SIZE / 2));
+
+        // Determine the gradient level based on the normalized distance
+        int gradientLevel = (int)(normalizedDistance * 8); // Assume 8 levels of gradient for simplicity
+
+        // Adjust color based on the normalized distance to create a rounded gradient effect
+        switch (gradientLevel) {
+            case 0: g.setColor(g.getColor().brighter().brighter().brighter()); break;
+            case 1: g.setColor(g.getColor().brighter().brighter()); break;
+            case 2: g.setColor(g.getColor().brighter()); break;
+            case 3: g.setColor(g.getColor()); break;
+            case 4: g.setColor(g.getColor().darker()); break;
+            case 5: g.setColor(g.getColor().darker().darker()); break;
+            case 6: g.setColor(g.getColor().darker().darker().darker()); break;
+            case 7: g.setColor(g.getColor().darker().darker().darker().darker()); break;
+            default: g.setColor(g.getColor().darker().darker().darker().darker().darker()); break;
+        }
+
+        g.fillRect(x, y, width, height); // DRAW COLOR
+        g.setColor(Color.BLACK); // BORDER COLOR
+        g.drawRect(x, y, width, height); // DRAW BORDER
     }
 
     /** Draw a cross in rect
@@ -189,7 +179,7 @@ public class MondrianArtPart2 {
         g.drawOval(x, y, width, height);
     }
 
-    /** Draw a polygon fills in rect
+    /** Draw a pacman fills in rect
      * 
      * @param g Graphics object.
      * @param x Origin x value of the region.
@@ -197,7 +187,7 @@ public class MondrianArtPart2 {
      * @param width Region width.
      * @param height Region height.
      */
-    private static void drawPolygon(Graphics g, int x, int y, int width, int height) {
+    private static void drawPacMan(Graphics g, int x, int y, int width, int height) {
         int[] xPoints = {x, x + width / 2, x + width, x + width / 2, x + width, x + width / 2};
         int[] yPoints = {y + height / 2, y, y + height / 4, y + height / 2, y + 3 * height / 4, y + height};
         g.drawPolygon(xPoints, yPoints, 6);
@@ -256,61 +246,57 @@ public class MondrianArtPart2 {
                 ear2X = faceX - earDiameter / 2;
                 ear2Y = faceY + faceDiameter - earDiameter / 2;
                 break;
-    }
-
+        }
     // Draw ears
     g.drawOval(ear1X, ear1Y, earDiameter, earDiameter); // First ear
     g.drawOval(ear2X, ear2Y, earDiameter, earDiameter); // Second ear
-
     }
+
     /**
      * Splits a region into four separate regions
      *
+     * @param g Graphics object.
      * @param x Origin x value of the region.
      * @param y Origin y value of the region.
      * @param width Region width.
      * @param height Region height.
-     * @param g Graphics object.
-     * @param r Lab2Random object.
      * @param horzSplit Horizontal split line
      * @param vertSplit Vertical split line
      */
-    private static void fourRegions(int x, int y, int width, int height, Graphics g, Lab2Random r, int horzSplit, int vertSplit) {
-        drawArt(x, y, vertSplit, horzSplit, g, r);
-        drawArt(x + vertSplit, y, width - vertSplit, horzSplit, g, r);
-        drawArt(x, y + horzSplit, vertSplit, height - horzSplit, g, r);
-        drawArt(x + vertSplit, y + horzSplit, width - vertSplit, height - horzSplit, g, r);
+    private static void fourRegions(Graphics g, int x, int y, int width, int height, int horzSplit, int vertSplit) {
+        drawArt(g, x, y, vertSplit, horzSplit);
+        drawArt(g, x + vertSplit, y, width - vertSplit, horzSplit);
+        drawArt(g, x, y + horzSplit, vertSplit, height - horzSplit);
+        drawArt(g, x + vertSplit, y + horzSplit, width - vertSplit, height - horzSplit);
     }
 
     /**
      * Splits a region into two separate regions vertically
      *
+     * @param g Graphics object.
      * @param x Origin x value of the region.
      * @param y Origin y value of the region.
      * @param width Region width.
      * @param height Region height.
-     * @param g Graphics object.
-     * @param r Lab2Random object.
      * @param vertSplit Vertical split line
      */
-    private static void twoRegionsVert(int x, int y, int width, int height, Graphics g, Lab2Random r, int vertSplit) {
-        drawArt(x, y, vertSplit, height, g, r);
-        drawArt(x + vertSplit, y, width - vertSplit, height, g, r);
+    private static void twoRegionsVert(Graphics g, int x, int y, int width, int height, int vertSplit) {
+        drawArt(g, x, y, vertSplit, height);
+        drawArt(g, x + vertSplit, y, width - vertSplit, height);
     }
 
     /**
      * Splits a region into two separate regions horizontally
      *
+     * @param g Graphics object.
      * @param x Origin x value of the region.
      * @param y Origin y value of the region.
      * @param width Region width.
      * @param height Region height.
-     * @param g Graphics object.
-     * @param r Lab2Random object.
      * @param horzSplit Horizontal split line
      */
-    private static void twoRegionsHorz(int x, int y, int width, int height, Graphics g, Lab2Random r, int horzSplit) {
-        drawArt(x, y, width, horzSplit, g, r);
-        drawArt(x, y + horzSplit, width, height - horzSplit, g, r);
+    private static void twoRegionsHorz(Graphics g, int x, int y, int width, int height, int horzSplit) {
+        drawArt(g, x, y, width, horzSplit);
+        drawArt(g, x, y + horzSplit, width, height - horzSplit);
     }
 }
